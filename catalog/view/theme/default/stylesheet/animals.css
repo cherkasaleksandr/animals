@@ -1,0 +1,55 @@
+#form_add_animals {
+    padding: 15px;
+    border: 1px solid #C6DEE8;	
+}
+
+#form_add_animals .form-group {
+    height: 50px;
+}
+#gender span {
+    margin-right: 30px;
+}
+#gender input {
+    margin-right: 5px;
+}
+#animals_reply {
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border: 1px solid #135802;
+    font-weight: bold;
+    background: #e7ffc0;
+    font-size: 14px;
+	padding: 20px;
+}
+
+
+.zebra {
+    padding: 15px;
+    border: 1px solid #C6DEE8;
+    margin-bottom: 5px;
+    overflow: hidden;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+}
+
+.zebra > div {
+  display: flex;
+  align-items: center;
+  margin: auto;
+}
+
+.zebra:nth-child(even) {
+	background-color: #f0f0f0;
+}
+
+#all_animals {
+    overflow: hidden;
+}
+
+#all_animals p {
+    margin: 0px;
+}
+
