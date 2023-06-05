@@ -20,9 +20,42 @@ class ModelAccountAnimals extends Model {
 	}
 
 	public function save_animals($post){
-		$q = "INSERT INTO `".DB_PREFIX."animals_customer` SET `id_types` = ".(int)$post['id_types'].", `id_breeds` = ".(int)$post['id_breeds'].", `id_customer` = ".(int)$this->customer->getId().", `gender` = ".(int)$post['gender'].", `age_months` = ".(int)$post['age_months']."";
-		$this->db->query($q);
-		return $this->db->countAffected();
+		
+		$q = "SELECT 
+				`t`.`id_types`,
+				`t`.`gender_flag`,
+				`b`.`id_breeds`
+		FROM `".DB_PREFIX."animals_types` as `t`
+		LEFT JOIN `".DB_PREFIX."animals_breeds` as `b` ON `t`.`id_types` = `b`.`id_types`
+		
+		WHERE `t`.`id_types` =  ".(int)$post['id_types']." 
+		AND `b`.`id_breeds` =  ".(int)$post['id_breeds'];
+		$qq = $this->db->query($q);
+		
+		
+		$flag = count($qq->rows);
+		$gender_flag = false;
+		
+		if ($flag == 1){
+			$flag_gender = $qq->row;
+		
+			if($flag_gender['gender_flag'] == 0){
+				if ((int)$post['gender'] == 0) $gender_flag = true;
+			} else {
+				if ((int)$post['gender'] == 1 && (int)$post['gender'] == 2) $gender_flag = true;	
+			}
+			
+		}
+
+		if ((int)$post['age_months'] > 0 && $gender_flag) {
+		
+			$q = "INSERT INTO `".DB_PREFIX."animals_customer` SET `id_types` = ".(int)$post['id_types'].", `id_breeds` = ".(int)$post['id_breeds'].", `id_customer` = ".(int)$this->customer->getId().", `gender` = ".(int)$post['gender'].", `age_months` = ".(int)$post['age_months']."";
+			$this->db->query($q);
+			return $this->db->countAffected();
+		} else {
+			return 100;
+		}
+		
 		
 	}
 	

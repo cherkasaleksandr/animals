@@ -244,6 +244,8 @@ function save_animals() {
 			url: 'index.php?route=account/animals/save_animals',
 			type: 'post',
 			data: {data},
+			cache: false,
+			timeout: 5000,
 			dataType: 'json',
 					success: function(json) {
 						
@@ -266,11 +268,22 @@ function save_animals() {
 									$('#animals_reply').html('');
 									$('#animals_reply').css('display','none');	
 									$('button').show();
+									$('#add_animals').css('display','none');
 								}, 3000);
 							
 							
 						}
 						
+					},
+					error: function(xhr, status, error) {
+						$('#animals_reply').css('display','block');
+						$('#animals_reply').html('<?php echo $reply_error; ?>');
+						setTimeout(function() {	
+								$('#animals_reply').html('');
+								$('#animals_reply').css('display','none');	
+								$('button').show();
+								$('#add_animals').css('display','none');
+							}, 3000);
 					}
 		});
 	  
